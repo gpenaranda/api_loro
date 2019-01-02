@@ -14,6 +14,7 @@ from rest_framework.reverse import reverse, reverse_lazy
 from rest_framework import renderers
 
 # Serializers
+from api.serializers import TiposMonedaSerializer
 from api.serializers import TiposClienteSerializer
 from api.serializers import TiposDocumentoSerializer
 from api.serializers import SumaSerializer
@@ -25,25 +26,11 @@ from api.serializers import EstatusSerializer
 from api.models import TiposCliente
 from api.models import TiposDocumento
 from api.models import Estatus
+from api.models import TiposMoneda
+
 
 # Custom permissions
 #from api.permissions import IsOwnerOrReadOnly
-
-
-# API Root Changes
-@api_view(['GET'])
-def api_root(request, format=None):
-    response = []
-    data_response = {
-        'nombre': 'tipos-cliente',
-        'url' : request.build_absolute_uri('tipos-cliente/'),
-        'descripcion': 'Listado de los Tipos de Cliente'
-    }
-    response = {
-        'Tipos de Cliente' : data_response
-    }
-    
-    return Response(response)
 
 
 class Suma(APIView):
@@ -96,4 +83,15 @@ class TiposDocumentoViewSet(viewsets.ModelViewSet):
     
     queryset = TiposDocumento.objects.all()
     serializer_class = TiposDocumentoSerializer
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+# Tipos de Moneda Endpoint - ViewSet
+class TiposMonedaViewSet(viewsets.ModelViewSet):
+    """
+    This viewset automatically provides `list` and `detail` actions.
+    """
+    
+    queryset = TiposMoneda.objects.all()
+    serializer_class = TiposMonedaSerializer
     permission_classes = (permissions.IsAuthenticatedOrReadOnly,)

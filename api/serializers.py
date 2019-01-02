@@ -1,12 +1,18 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from api.models import TiposCliente, TiposDocumento, Estatus
+from api.models import TiposMoneda, TiposCliente, TiposDocumento, Estatus
 
 class EstatusSerializer(serializers.HyperlinkedModelSerializer):
 
     class Meta:
         model = Estatus
         fields = ('nombre', 'id')
+
+class TiposMonedaSerializer(serializers.HyperlinkedModelSerializer):
+
+    class Meta:
+        model = TiposMoneda
+        fields = ('nombre', 'simbolo','id')
 
 class TiposClienteSerializer(serializers.HyperlinkedModelSerializer):
 
